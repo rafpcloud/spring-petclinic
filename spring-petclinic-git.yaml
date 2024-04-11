@@ -32,7 +32,7 @@ spec:
         deploymentconfig: spring-petclinic-git
     spec:
       containers:
-              - image: image-registry.openshift-image-registry.svc:5000/pet/spring-petclinic-git:latest
+        - image: image-registry.openshift-image-registry.svc:5000/pet/spring-petclinic-git:latest
         imagePullPolicy: Always
         name: spring-petclinic-git
         ports:
