@@ -1,0 +1,53 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+  labels:
+    app: spring-petclinic-git
+    app.kubernetes.io/component: spring-petclinic-git
+    app.kubernetes.io/instance: spring-petclinic-git
+    app.kubernetes.io/name: spring-petclinic-git
+    app.kubernetes.io/part-of: sample-app
+    app.openshift.io/runtime: java
+    app.openshift.io/runtime-version: openjdk-17-ubi8
+  name: spring-petclinic-git
+  namespace: pet
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: spring-petclinic-git:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    contextDir: /
+    git:
+      uri: https://github.com/rafpcloud/spring-petclinic.git
+    type: Git
+  strategy:
+    sourceStrategy:
+      env:
+      - name: SPRING_PROFILES_ACTIVE
+        value: mysql
+      - name: MYSQL_URL
+        value: jdbc:mysql://mysql:3306/petclinic
+      from:
+        kind: ImageStreamTag
+        name: java:openjdk-17-ubi8
+        namespace: openshift
+    type: Source
+  triggers:
+  - generic:
+      secretReference:
+        name: spring-petclinic-git-generic-webhook-secret
+    type: Generic
+  - github:
+      secretReference:
+        name: spring-petclinic-git-github-webhook-secret
+    type: GitHub
+  - imageChange: {}
+    type: ImageChange
+  - type: ConfigChange
