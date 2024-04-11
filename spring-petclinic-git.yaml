@@ -3,14 +3,14 @@ kind: Deployment
 metadata:
   annotations:
   labels:
-    app: spring-petclinic-git
-    app.kubernetes.io/component: spring-petclinic-git
-    app.kubernetes.io/instance: spring-petclinic-git
-    app.kubernetes.io/name: spring-petclinic-git
+    app: spring-petclinic
+    app.kubernetes.io/component: spring-petclinic
+    app.kubernetes.io/instance: spring-petclinic
+    app.kubernetes.io/name: spring-petclinic
     app.kubernetes.io/part-of: sample-app
     app.openshift.io/runtime: java
     app.openshift.io/runtime-version: openjdk-17-ubi8
-  name: spring-petclinic-git
+  name: spring-petclinic
   namespace: pet
 spec:
   progressDeadlineSeconds: 600
@@ -18,7 +18,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: spring-petclinic-git
+      app: spring-petclinic
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -28,13 +28,13 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: spring-petclinic-git
-        deploymentconfig: spring-petclinic-git
+        app: spring-petclinic
+        deploymentconfig: spring-petclinic
     spec:
       containers:
-        - image: image-registry.openshift-image-registry.svc:5000/pet/spring-petclinic-git:latest
+        - image: image-registry.openshift-image-registry.svc:5000/pet/spring-petclinic:latest
         imagePullPolicy: Always
-        name: spring-petclinic-git
+        name: spring-petclinic
         ports:
         - containerPort: 8080
           protocol: TCP
